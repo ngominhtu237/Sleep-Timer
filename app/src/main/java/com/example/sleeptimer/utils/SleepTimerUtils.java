@@ -1,19 +1,10 @@
 package com.example.sleeptimer.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import android.annotation.SuppressLint;
 
 public class SleepTimerUtils {
-    public static String ConvertMinutesTimeToHHMMString(int minutesTime) {
-        TimeZone timeZone = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-        df.setTimeZone(timeZone);
-        String time = df.format(new Date(minutesTime * 60 * 1000L));
 
-        return time;
-    }
-
+    @SuppressLint("DefaultLocale")
     public static String secondToFullTime(long sec) {
         long seconds = sec % 60;
         long minutes = sec / 60;

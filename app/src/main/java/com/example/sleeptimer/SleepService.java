@@ -16,11 +16,11 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-
 import com.example.sleeptimer.receiver.StopServiceReceiver;
 import com.example.sleeptimer.utils.SleepCountDownTimer;
 import com.example.sleeptimer.utils.SleepTimerUtils;
+
+import androidx.core.app.NotificationCompat;
 
 public class SleepService  extends Service {
 
@@ -64,28 +64,6 @@ public class SleepService  extends Service {
 
         // intent add more time
 
-
-//        builder2 = new NotificationCompat.Builder(this, CHANNEL_ID2)
-//                .setSmallIcon(R.mipmap.icon_clock)
-//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_time_large_64))
-//                .setCategory(Notification.CATEGORY_CALL)
-//                .setContentTitle(getString(R.string.app_name))
-//                .setContentText("Have a good night ^^")
-//                .setPriority(NotificationManager.IMPORTANCE_HIGH)
-//                .setContentIntent(pendingIntent)
-//                .setDefaults(Notification.DEFAULT_ALL);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.channel_name);
-//            String description = getString(R.string.channel_description);
-//            int importance = NotificationManager.IMPORTANCE_HIGH; // remove notification sound
-//            channel = new NotificationChannel(CHANNEL_ID2, name, importance);
-//            channel.setDescription(description);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//        notificationManager.notify(NOTIFICATION_ID2, builder2.build());
-
-
         builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.icon_clock)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_time_large_64))
@@ -119,21 +97,16 @@ public class SleepService  extends Service {
     }
 
     public void updateNotification(long millisUntilFinished) {
-
         builder.setContentText(SleepTimerUtils.secondToFullTime((millisUntilFinished/1000)) + " time left until end.");
-//        builder.setOngoing(true);
 
         // Start a lengthy operation in a background thread
-
         startForeground(NOTIFICATION_ID, builder.build());
-
-
     }
 
     public void finishService() {
+        Log.v("SleepService ", "finishService");
         Intent currentService = new Intent(this, SleepService.class);
         stopService(currentService);
-        Log.v("SleepService ", "finishService");
         if (notificationManager != null) {
             notificationManager.cancel(SleepService.NOTIFICATION_ID);
         }
@@ -168,12 +141,13 @@ public class SleepService  extends Service {
                     @Override
                     public void onAudioFocusChange(int focusChange) {
                         if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-                            // Pause
+
                             Log.v("focusChange ", "pause");
                         } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                            // Resume
+
                             Log.v("focusChange ", "resume");
                         } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+
                             // Stop or pause depending on your need
                             Log.v("focusChange ", "option");
                             mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, saveVolume, 0);
@@ -201,6 +175,5 @@ public class SleepService  extends Service {
                 startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(startMain);
         }
-
     }
 }

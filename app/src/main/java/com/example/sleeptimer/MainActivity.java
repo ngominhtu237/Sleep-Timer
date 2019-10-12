@@ -1,5 +1,6 @@
 package com.example.sleeptimer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,9 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.sleeptimer.view.CircleSeekBar;
+
+import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.sleeptimer.utils.GradientAnimation.oscillateDemo;
 
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setTitle("Sleep Timer");
 
         mStartSleepButton = findViewById(R.id.buttonStartSleep);
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         mHourSeekbar = findViewById(R.id.seek_hour);
         mMinuteSeekbar = findViewById(R.id.seek_minute);
         mTextView =  findViewById(R.id.textview);
-//        oscillateDemo(this, mTextView,  getColor(R.color.accent_white), getColor(R.color.accent_pink));
         oscillateDemo(this, mMinuteSeekbar, 0, getColor(R.color.accent_cyan));
         oscillateDemo(this, mHourSeekbar, 0, getColor(R.color.accent_yellow));
 
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mMinuteSeekbar.setCurProcess(0);
     }
 
+    @SuppressLint("SetTextI18n")
     private void changeText(int hour, int minute) {
         String hourStr = hour > 9 ? hour + "" : "0" + hour;
         String minuteStr = minute > 9 ? minute + "" : "0" + minute;
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics( dm );
 
-        int originalPos[] = new int[2];
+        int[] originalPos = new int[2];
         view.getLocationOnScreen( originalPos );
 
         int xDelta = (dm.widthPixels - view.getMeasuredWidth() - originalPos[0])/2;

@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-import androidx.vectordrawable.graphics.drawable.ArgbEvaluator;
-
 import com.example.sleeptimer.R;
 import com.example.sleeptimer.view.CircleSeekBar;
+
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator;
 
 public class GradientAnimation {
     public static void oscillateDemo(final Activity activity, final View view, final int colorOne, final int colorTwo) {
@@ -54,7 +54,7 @@ public class GradientAnimation {
         oscillateThread.start();
     }
 
-    public static void animateTextViewColors(View textView, Integer colorTo) {
+    private static void animateTextViewColors(View textView, Integer colorTo) {
 
         final Property<View, Integer> property = new Property<View, Integer>(int.class, "color") {
             @Override

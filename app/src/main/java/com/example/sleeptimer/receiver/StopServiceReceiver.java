@@ -11,8 +11,8 @@ import com.example.sleeptimer.SleepService;
 public class StopServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent service = new Intent(context, SleepService.class);
         Log.v("StopServiceReceiver ", "onReceive");
+        Intent service = new Intent(context, SleepService.class);
         context.stopService(service);
         cancelNotification(context);
     }
