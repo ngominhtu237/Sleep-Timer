@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/accent_black"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/accent_white"
+        android:fontFamily="@font/vachitec"
+        android:gravity="center"
+        android:textSize="90sp" />
+
+    <RelativeLayout
+        android:id="@+id/seekContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true">
+
+        <com.example.sleeptimer.view.CircleSeekBar
+            android:id="@+id/seek_minute"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            app:wheel_max_process="59"
+            app:wheel_reached_color="@color/accent_yellow"
+            app:wheel_has_pointer_shadow="true"
+            app:wheel_has_wheel_shadow="true"
+            app:wheel_pointer_radius="18dp"
+            app:wheel_unreached_width="18dp"
+            android:padding="22dp"/>
+
+        <com.example.sleeptimer.view.CircleSeekBar
+            android:id="@+id/seek_hour"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="80dp"
+            android:layout_centerInParent="true"
+            app:wheel_max_process="5"
+            app:wheel_pointer_radius="8dp"
+            app:wheel_has_pointer_shadow="true"
+            app:wheel_has_wheel_shadow="true"
+            app:wheel_reached_color="@color/accent_cyan"
+            app:wheel_unreached_width="35dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonStartSleep"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:text="Sleep now !!!"
+        tools:ignore="MissingConstraints"
+        android:textColor="@color/accent_white"
+        android:background="@drawable/button_start_circle_background"
+        android:foreground="@drawable/ripple_circle"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="323dp" />
+
+    <Button
+        android:id="@+id/buttonStopSleep"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:text="STOP"
+        tools:ignore="MissingConstraints"
+        android:textColor="@color/accent_white"
+        android:background="@drawable/button_stop_circle_background"
+        android:foreground="@drawable/ripple_circle"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="323dp"
+        android:visibility="gone"/>
+
+    <!--<NumberPicker-->
+        <!--android:id="@+id/numberPicker"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/seekContainer"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--tools:ignore="MissingConstraints" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvWish"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/numberPicker"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="7dp"-->
+        <!--android:text="@string/wish" />-->
+
+</RelativeLayout>

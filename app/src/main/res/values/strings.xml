@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SleepTimer</string>
+
+    <string name="channel_name">JAV</string>
+    <string name="channel_description">Channel description</string>
+
+    <string name="stop">Stop</string>
+    <string name="extend">Increase time</string>
+    <string name="wish">Good night, my friend. I wish you have a dream full of happiness tonight ^^</string>
+</resources>
