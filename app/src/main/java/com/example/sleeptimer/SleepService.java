@@ -34,6 +34,7 @@ public class SleepService  extends Service {
     private SleepCountDownTimer mSleepCountDownTimer;
     private NotificationChannel channel;
     int timeCountdown;
+    long currentTimeCountDown;
 
     @Override
     public void onCreate() {
@@ -97,6 +98,9 @@ public class SleepService  extends Service {
     }
 
     public void updateNotification(long millisUntilFinished) {
+        Intent intentUpdateUI = new Intent("UPDATE_TIMER_UI");
+        intentUpdateUI.putExtra("second_update", millisUntilFinished/1000);
+        sendBroadcast(intentUpdateUI);
         builder.setContentText(SleepTimerUtils.secondToFullTime((millisUntilFinished/1000)) + " time left until end.");
 
         // Start a lengthy operation in a background thread

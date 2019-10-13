@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sleeptimer.utils.SleepTimerUtils;
 import com.example.sleeptimer.view.CircleSeekBar;
 
 import java.util.Objects;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mStartSleepButton = findViewById(R.id.buttonStartSleep);
         mStopSleepButton = findViewById(R.id.buttonStopSleep);
-        mClockTV =  findViewById(R.id.clockTV);
+        mClockTV = findViewById(R.id.clockTV);
         mStartSleepButton.setOnClickListener(this);
         mStopSleepButton.setOnClickListener(this);
         mClockTV.setOnClickListener(this);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMinuteSeekbar.setCurProcess(0);
 
         registerReceiver(stopSleepReceiver, new IntentFilter("STOP_SLEEP_TIMER"));
+        registerReceiver(updateTimerReceiver, new IntentFilter("UPDATE_TIMER_UI"));
     }
 
     @SuppressLint("SetTextI18n")
@@ -80,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startSleepService() {
-            Intent intent = new Intent(MainActivity.this, SleepService.class);
-            intent.putExtra("time", mMinuteSeekbar.getCurProcess() + mHourSeekbar.getCurProcess() * 60);
-            stopService(intent); // when user multiple click => need to restart service to prevent duplicate notification
-            startService(intent);
+        Intent intent = new Intent(MainActivity.this, SleepService.class);
+        intent.putExtra("time", mMinuteSeekbar.getCurProcess() + mHourSeekbar.getCurProcess() * 60);
+        stopService(intent); // when user multiple click => need to restart service to prevent duplicate notification
+        startService(intent);
     }
 
     private void stopSleepService() {
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonStartSleep:
-                if(mMinuteSeekbar.getCurProcess() == 0 && mHourSeekbar.getCurProcess() == 0) {
+                if (mMinuteSeekbar.getCurProcess() == 0 && mHourSeekbar.getCurProcess() == 0) {
                     Toast.makeText(this, "Please choose sleep time!", Toast.LENGTH_SHORT).show();
                 } else {
                     startSleepService();
@@ -145,9 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMinuteSeekbar.setCurProcess(0);
     }
 
-    private void addOrRemoveProperty(View view, int property, boolean isAdd){
+    private void addOrRemoveProperty(View view, int property, boolean isAdd) {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        if(isAdd){
+        if (isAdd) {
             layoutParams.addRule(property);
         } else {
             layoutParams.removeRule(property);
@@ -163,9 +165,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    BroadcastReceiver updateTimerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long second = intent.getLongExtra("second_update", 0);
+            mClockTV.setText(SleepTimerUtils.secondToFullTime(second));
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(stopSleepReceiver);
+        unregisterReceiver(updateTimerReceiver);
     }
 }

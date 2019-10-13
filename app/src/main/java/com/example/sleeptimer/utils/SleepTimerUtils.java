@@ -19,4 +19,10 @@ public class SleepTimerUtils {
         }
         return String.format("%02d:%02d", minutes, seconds);
     }
+
+    public static String formatHoursAndMinutes(long totalMinutes) {
+        long hours = totalMinutes / 60; //since both are ints, you get an int
+        long minutes = totalMinutes % 60;
+        return hours + ":" + minutes;
+    }
 }
