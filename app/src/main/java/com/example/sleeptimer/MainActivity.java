@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CircleSeekBar mHourSeekbar;
     private CircleSeekBar mMinuteSeekbar;
     private TextView mClockTV;
-    private int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHourSeekbar.setCurProcess(0);
         mMinuteSeekbar.setCurProcess(0);
 
-        registerReceiver(stopSleepReceiver, new IntentFilter("STOP_SLEEP_TIMER"));
-        registerReceiver(updateTimerReceiver, new IntentFilter("UPDATE_TIMER_UI"));
+        registerReceiver(stopSleepReceiver, new IntentFilter(SleepService.STOP_TIMER));
+        registerReceiver(updateTimerReceiver, new IntentFilter(SleepService.UPDATE_TIME_UI));
     }
 
     @SuppressLint("SetTextI18n")
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             notificationManager.cancel(SleepService.NOTIFICATION_ID);
         }
     }
-
 
     @Override
     public void onClick(View v) {

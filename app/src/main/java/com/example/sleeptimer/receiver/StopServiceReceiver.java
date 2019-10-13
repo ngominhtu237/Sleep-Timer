@@ -15,7 +15,7 @@ public class StopServiceReceiver extends BroadcastReceiver {
         Intent service = new Intent(context, SleepService.class);
         context.stopService(service);
         cancelNotification(context);
-        context.sendBroadcast(new Intent("STOP_SLEEP_TIMER"));
+        context.sendBroadcast(new Intent(SleepService.STOP_TIMER));
     }
 
     public static void cancelNotification(Context context) {

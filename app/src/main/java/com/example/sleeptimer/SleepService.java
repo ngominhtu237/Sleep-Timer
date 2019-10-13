@@ -24,17 +24,17 @@ import androidx.core.app.NotificationCompat;
 
 public class SleepService  extends Service {
 
-    public static final int NOTIFICATION_ID = 1;
-    public static final int NOTIFICATION_ID2 = 2;
+    public final static String UPDATE_TIME_UI = "UPDATE_TIME_UI";
+    public final static String STOP_TIMER = "STOP_TIMER";
 
+    public static final int NOTIFICATION_ID = 1;
     private static final String CHANNEL_ID = "channel_1";
-    private static final String CHANNEL_ID2 = "channel_2";
-    private NotificationCompat.Builder builder, builder2;
+
+    private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
     private SleepCountDownTimer mSleepCountDownTimer;
     private NotificationChannel channel;
     int timeCountdown;
-    long currentTimeCountDown;
 
     @Override
     public void onCreate() {
@@ -98,7 +98,7 @@ public class SleepService  extends Service {
     }
 
     public void updateNotification(long millisUntilFinished) {
-        Intent intentUpdateUI = new Intent("UPDATE_TIMER_UI");
+        Intent intentUpdateUI = new Intent(UPDATE_TIME_UI);
         intentUpdateUI.putExtra("second_update", millisUntilFinished/1000);
         sendBroadcast(intentUpdateUI);
         builder.setContentText(SleepTimerUtils.secondToFullTime((millisUntilFinished/1000)) + " time left until end.");
