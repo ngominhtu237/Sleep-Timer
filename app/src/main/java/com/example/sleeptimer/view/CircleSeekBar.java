@@ -95,6 +95,10 @@ public class CircleSeekBar extends View {
         initPaints();
     }
 
+    public void setCanTouch(boolean canTouch) {
+        isCanTouch = canTouch;
+    }
+
     private void initPaints() {
         mDefShadowOffset = getDimen(R.dimen.def_shadow_offset);
         /**

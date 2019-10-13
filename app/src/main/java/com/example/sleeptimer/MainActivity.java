@@ -1,17 +1,17 @@
 package com.example.sleeptimer;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.AnimationSet;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.sleeptimer.utils.GradientAnimation.oscillateDemo;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mStartSleepButton, mStopSleepButton;
     private CircleSeekBar mHourSeekbar;
     private CircleSeekBar mMinuteSeekbar;
-    private TextView mTextView;
+    private TextView mClockTV;
     private int time;
 
     @Override
@@ -41,20 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
         mStartSleepButton = findViewById(R.id.buttonStartSleep);
         mStopSleepButton = findViewById(R.id.buttonStopSleep);
-        mStartSleepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    startSleepService();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        mClockTV =  findViewById(R.id.clockTV);
+        mStartSleepButton.setOnClickListener(this);
+        mStopSleepButton.setOnClickListener(this);
+        mClockTV.setOnClickListener(this);
 
         mHourSeekbar = findViewById(R.id.seek_hour);
         mMinuteSeekbar = findViewById(R.id.seek_minute);
-        mTextView =  findViewById(R.id.textview);
+
         oscillateDemo(this, mMinuteSeekbar, 0, getColor(R.color.accent_cyan));
         oscillateDemo(this, mHourSeekbar, 0, getColor(R.color.accent_yellow));
 
@@ -74,54 +68,104 @@ public class MainActivity extends AppCompatActivity {
 
         mHourSeekbar.setCurProcess(0);
         mMinuteSeekbar.setCurProcess(0);
+
+        registerReceiver(stopSleepReceiver, new IntentFilter("STOP_SLEEP_TIMER"));
     }
 
     @SuppressLint("SetTextI18n")
     private void changeText(int hour, int minute) {
         String hourStr = hour > 9 ? hour + "" : "0" + hour;
         String minuteStr = minute > 9 ? minute + "" : "0" + minute;
-        mTextView.setText(hourStr + ":" + minuteStr);
+        mClockTV.setText(hourStr + ":" + minuteStr);
     }
 
     private void startSleepService() {
-        if(mMinuteSeekbar.getCurProcess() == 0 && mHourSeekbar.getCurProcess() == 0) {
-            Toast.makeText(this, "Please choose sleep time!", Toast.LENGTH_SHORT).show();
-        } else {
             Intent intent = new Intent(MainActivity.this, SleepService.class);
             intent.putExtra("time", mMinuteSeekbar.getCurProcess() + mHourSeekbar.getCurProcess() * 60);
             stopService(intent); // when user multiple click => need to restart service to prevent duplicate notification
             startService(intent);
+    }
 
-            doAnimationStartService();
+    private void stopSleepService() {
+        Intent service = new Intent(this, SleepService.class);
+        stopService(service);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.cancel(SleepService.NOTIFICATION_ID);
         }
     }
 
-    private void doAnimationStartService() {
-        moveViewToScreenCenter(mTextView);
-        mStartSleepButton.setVisibility(View.GONE);
-        mHourSeekbar.setVisibility(View.GONE);
-        mMinuteSeekbar.setVisibility(View.GONE);
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonStartSleep:
+                if(mMinuteSeekbar.getCurProcess() == 0 && mHourSeekbar.getCurProcess() == 0) {
+                    Toast.makeText(this, "Please choose sleep time!", Toast.LENGTH_SHORT).show();
+                } else {
+                    startSleepService();
+                    adjustLayoutWhenClickStart();
+                }
+                break;
+            case R.id.buttonStopSleep:
+                stopSleepService();
+                adjustLayoutWhenClickStop();
+                break;
+            case R.id.clockTV:
+                adjustLayoutWhenClickClock();
+                break;
+        }
+    }
+
+    private void adjustLayoutWhenClickClock() {
+        addOrRemoveProperty(mClockTV, RelativeLayout.CENTER_IN_PARENT, false);
+        mHourSeekbar.setVisibility(View.VISIBLE);
+        mMinuteSeekbar.setVisibility(View.VISIBLE);
+        mHourSeekbar.setCanTouch(false);
+        mMinuteSeekbar.setCanTouch(false);
         mStopSleepButton.setVisibility(View.VISIBLE);
     }
 
-    private void moveViewToScreenCenter( final View view ){
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics( dm );
+    private void adjustLayoutWhenClickStart() {
+        addOrRemoveProperty(mClockTV, RelativeLayout.CENTER_IN_PARENT, true);
+        mStartSleepButton.setVisibility(View.GONE);
+        mHourSeekbar.setVisibility(View.GONE);
+        mMinuteSeekbar.setVisibility(View.GONE);
+        Toast.makeText(this, "Timer has been set", Toast.LENGTH_SHORT).show();
+    }
 
-        int[] originalPos = new int[2];
-        view.getLocationOnScreen( originalPos );
+    private void adjustLayoutWhenClickStop() {
+        mStartSleepButton.setVisibility(View.VISIBLE);
+        mStopSleepButton.setVisibility(View.GONE);
+        mHourSeekbar.setVisibility(View.VISIBLE);
+        mMinuteSeekbar.setVisibility(View.VISIBLE);
+        mHourSeekbar.setCanTouch(true);
+        mMinuteSeekbar.setCanTouch(true);
+        mHourSeekbar.setCurProcess(0);
+        mMinuteSeekbar.setCurProcess(0);
+    }
 
-        int xDelta = (dm.widthPixels - view.getMeasuredWidth() - originalPos[0])/2;
-        int yDelta = (dm.heightPixels - view.getMeasuredHeight() - originalPos[1])/2;
+    private void addOrRemoveProperty(View view, int property, boolean isAdd){
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        if(isAdd){
+            layoutParams.addRule(property);
+        } else {
+            layoutParams.removeRule(property);
+        }
+        view.setLayoutParams(layoutParams);
+    }
 
-        AnimationSet animSet = new AnimationSet(true);
-        animSet.setFillAfter(true);
-        animSet.setDuration(1000);
-        animSet.setInterpolator(new LinearInterpolator());
-        TranslateAnimation translate = new TranslateAnimation( 0, xDelta , 0, yDelta);
-        animSet.addAnimation(translate);
-        ScaleAnimation scale = new ScaleAnimation(1f, 1.5f, 1f, 1.5f, ScaleAnimation.RELATIVE_TO_PARENT, .5f, ScaleAnimation.RELATIVE_TO_PARENT, .5f);
-        animSet.addAnimation(scale);
-        view.startAnimation(animSet);
+    BroadcastReceiver stopSleepReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            addOrRemoveProperty(mClockTV, RelativeLayout.CENTER_IN_PARENT, false);
+            adjustLayoutWhenClickStop();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(stopSleepReceiver);
     }
 }
