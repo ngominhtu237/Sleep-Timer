@@ -18,7 +18,7 @@ import android.util.Log;
 
 import com.example.sleeptimer.receiver.StopServiceReceiver;
 import com.example.sleeptimer.utils.SleepCountDownTimer;
-import com.example.sleeptimer.utils.SleepTimerUtils;
+import com.example.sleeptimer.utils.TimeUtils;
 
 import androidx.core.app.NotificationCompat;
 
@@ -70,7 +70,7 @@ public class SleepService  extends Service {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_time_large_64))
                 .setCategory(Notification.CATEGORY_CALL)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(SleepTimerUtils.secondToFullTime(timeCountdown) + " time left until end.")
+                .setContentText(TimeUtils.secondToFullTime(timeCountdown) + " time left until end.")
                 .setPriority(NotificationManager.IMPORTANCE_HIGH)
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -101,7 +101,7 @@ public class SleepService  extends Service {
         Intent intentUpdateUI = new Intent(UPDATE_TIME_UI);
         intentUpdateUI.putExtra("second_update", millisUntilFinished/1000);
         sendBroadcast(intentUpdateUI);
-        builder.setContentText(SleepTimerUtils.secondToFullTime((millisUntilFinished/1000)) + " time left until end.");
+        builder.setContentText(TimeUtils.secondToFullTime((millisUntilFinished/1000)) + " time left until end.");
 
         // Start a lengthy operation in a background thread
         startForeground(NOTIFICATION_ID, builder.build());

@@ -9,13 +9,15 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sleeptimer.utils.SleepTimerUtils;
+import com.example.sleeptimer.utils.ServiceUtils;
+import com.example.sleeptimer.utils.TimeUtils;
 import com.example.sleeptimer.view.CircleSeekBar;
 
 import java.util.Objects;
@@ -55,14 +57,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHourSeekbar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onChanged(CircleSeekBar seekbar, int curValue) {
-                changeText(curValue, mMinuteSeekbar.getCurProcess());
+                if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
+                    changeText(curValue, mMinuteSeekbar.getCurProcess());
+                }
             }
+
         });
 
         mMinuteSeekbar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onChanged(CircleSeekBar seekbar, int curValue) {
-                changeText(mHourSeekbar.getCurProcess(), curValue);
+                if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
+                    changeText(mHourSeekbar.getCurProcess(), curValue);
+                }
             }
         });
 
@@ -71,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         registerReceiver(stopSleepReceiver, new IntentFilter(SleepService.STOP_TIMER));
         registerReceiver(updateTimerReceiver, new IntentFilter(SleepService.UPDATE_TIME_UI));
+
+        if (ServiceUtils.isMyServiceRunning(this, SleepService.class)) {
+            Log.v("SleepService ", "running...");
+            adjustLayoutWhenClickStart();
+        } else {
+            Log.v("SleepService ", "stop");
+            adjustLayoutWhenClickStop();
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -105,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     startSleepService();
                     adjustLayoutWhenClickStart();
+                    Toast.makeText(this, "Timer has been set", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.buttonStopSleep:
@@ -133,7 +149,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHourSeekbar.setVisibility(View.GONE);
         mMinuteSeekbar.setVisibility(View.GONE);
         mClockTV.setClickable(true);
-        Toast.makeText(this, "Timer has been set", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateSeekbar(long totalMinutes) {
+        int hour = (int) (totalMinutes / 60);
+        int minute = (int) (totalMinutes % 60);
+        mHourSeekbar.setCurProcess(hour);
+        mMinuteSeekbar.setCurProcess(minute);
     }
 
     private void adjustLayoutWhenClickStop() {
@@ -169,7 +191,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(Context context, Intent intent) {
             long second = intent.getLongExtra("second_update", 0);
-            mClockTV.setText(SleepTimerUtils.secondToFullTime(second));
+            mClockTV.setText(TimeUtils.secondToFullTime(second));
+            updateSeekbar(second / 60);
         }
     };
 
