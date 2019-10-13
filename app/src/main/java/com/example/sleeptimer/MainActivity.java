@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHourSeekbar.setCanTouch(false);
         mMinuteSeekbar.setCanTouch(false);
         mStopSleepButton.setVisibility(View.VISIBLE);
+        mClockTV.setClickable(false);
     }
 
     private void adjustLayoutWhenClickStart() {
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStartSleepButton.setVisibility(View.GONE);
         mHourSeekbar.setVisibility(View.GONE);
         mMinuteSeekbar.setVisibility(View.GONE);
+        mClockTV.setClickable(true);
         Toast.makeText(this, "Timer has been set", Toast.LENGTH_SHORT).show();
     }
 
