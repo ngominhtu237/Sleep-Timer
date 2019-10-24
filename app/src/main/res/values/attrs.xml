@@ -19,4 +19,15 @@
         <attr name="wheel_scroll_only_one_circle" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="CircleButton">
+        <attr name="cb_color" format="color" />
+        <attr name="cb_pressedRingWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchColorCustom">
+        <attr name="toggleOnColor" format="color" />
+        <attr name="toggleOffColor" format="color" />
+        <attr name="bgOnColor" format="color" />
+        <attr name="bgOffColor" format="color" />
+    </declare-styleable>
 </resources>

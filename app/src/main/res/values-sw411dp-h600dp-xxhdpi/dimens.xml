@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="time_size">85sp</dimen>
+    <dimen name="minute_margin_vertical">15dp</dimen>
+
+    <dimen name="minute_margin">40dp</dimen>
+    <dimen name="hour_margin">100dp</dimen>
+</resources>

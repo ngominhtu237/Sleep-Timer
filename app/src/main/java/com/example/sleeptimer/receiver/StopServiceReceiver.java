@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.sleeptimer.SleepService;
+import com.example.sleeptimer.service.SleepService;
 
 public class StopServiceReceiver extends BroadcastReceiver {
     @Override

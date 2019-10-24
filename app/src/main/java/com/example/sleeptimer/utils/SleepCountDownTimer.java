@@ -3,7 +3,7 @@ package com.example.sleeptimer.utils;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.example.sleeptimer.SleepService;
+import com.example.sleeptimer.service.SleepService;
 
 public class SleepCountDownTimer extends CountDownTimer {
 
@@ -22,7 +22,6 @@ public class SleepCountDownTimer extends CountDownTimer {
     @Override
     public void onFinish() {
         Log.v("SleepCountDownTimer", "onFinish");
-        mSleepService.finishService();
         try {
             mSleepService.stopPlayer();
         } catch (InterruptedException e) {

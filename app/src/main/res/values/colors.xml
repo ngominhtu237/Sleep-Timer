@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary" tools:ignore="MissingDefaultResource">#008577</color>
+<resources>
+    <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -22,31 +22,63 @@
     <color name="accent_orange">#ff9800</color>
     <color name="accent_brown">#795548</color>
     <color name="accent_white">#FFFFFF</color>
-    <color name="accent_grey">#9e9e9e</color>
+    <color name="accent_grey">#cccccc</color>
     <color name="accent_black">#000000</color>
 
     <color name="def_wheel_color">#4DFFFFFF</color>
     <color name="def_reached_color">#FFD844</color>
     <color name="def_pointer_color">#FFFFFF</color>
     <color name="md_green_200">#A5D6A7</color>
+    <color name="background_color_picker">#99000000</color>
 
-    <!-- 1st Gradient color -->
-    <color name="colorPurple_A400">#D500F9</color>
-    <color name="colorPurple_900">#4A148C</color>
-    <!-- ./ 1st Gradient color -->
+    <string-array name="color_choices">
+        <item>#f44336</item>
+        <item>#e91e63</item>
+        <item>#9c27b0</item>
+        <item>#673ab7</item>
+        <item>#3f51b5</item>
+        <item>#2196f3</item>
+        <item>#03a9f4</item>
+        <item>#00bcd4</item>
+        <item>#009688</item>
+        <item>#4caf50</item>
+        <item>#8bc34a</item>
+        <item>#cddc39</item>
+        <item>#ffeb3b</item>
+        <item>#ffc107</item>
+        <item>#ff9800</item>
+        <item>#ff5722</item>
+        <item>#795548</item>
+        <item>#9e9e9e</item>
+        <item>#607d8b</item>
+    </string-array>
 
-    <!-- 2nd Gradient color -->
-    <color name="colorAmber_A400">#FFC400</color>
-    <color name="colorAmber_900">#FF6F00</color>
-    <!-- ./ 2nd Gradient color -->
+    <color name="seekbar_hour_color">#cddc39</color>
+    <color name="seekbar_minute_color">#03a9f4</color>
 
-    <!-- 3rd Gradient color -->
-    <color name="colorGreen_A400">#00E676</color>
-    <color name="colorGreen_900">#1B5E20</color>
-    <!-- ./ 3rd Gradient color -->
+    <string-array name="color_choices_700">
+        <item>#d32f2f</item>
+        <item>#c2185b</item>
+        <item>#7b1fa2</item>
+        <item>#512da8</item>
+        <item>#303f9f</item>
+        <item>#1976d2</item>
+        <item>#0288d1</item>
+        <item>#0097a7</item>
+        <item>#00796b</item>
+        <item>#388e3c</item>
+        <item>#689f38</item>
+        <item>#afb42b</item>
+        <item>#fbc02d</item>
+        <item>#ffa000</item>
+        <item>#f57c00</item>
+        <item>#e64a19</item>
+        <item>#5d4037</item>
+        <item>#616161</item>
+        <item>#455a64</item>
+    </string-array>
 
-    <!-- 4th Gradient color -->
-    <color name="colorRed_A400">#FF1744</color>
-    <color name="colorRed_900">#B71C1C</color>
-    <!-- ./ 4th Gradient color -->
+    <color name="colorGradientStart">#D9FF43</color>
+    <color name="colorGradientCenter">#F67831</color>
+    <color name="colorGradientEnd">#FF1493</color>
 </resources>
