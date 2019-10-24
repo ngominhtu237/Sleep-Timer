@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent_black"
+    android:orientation="vertical"
+    tools:context=".activity.AboutActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/nightime"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="#737373" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="30sp"
+            android:fontFamily="@font/vachitec"
+            android:layout_marginTop="20dp"
+            android:text="Sleep Timer"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/sleep_timer_version"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/about_intro"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp"
+            android:text="@string/develop_by"/>
+
+        <TextView
+            android:id="@+id/moreInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:text="@string/for_more_information"/>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_white"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_marginTop="5dp"
+            android:text="candystarvn@gmail.com"/>
+    </LinearLayout>
+</LinearLayout>

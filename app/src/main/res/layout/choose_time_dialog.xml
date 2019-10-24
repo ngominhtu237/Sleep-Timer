@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/accent_black"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/selectMinuteTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/accent_white"
+            android:padding="12dp"
+            android:gravity="center"
+            android:text="Select minutes"
+            android:textSize="20sp" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selectMinuteTV"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            app:np_max="30"
+            app:np_min="5"
+            app:np_dividerThickness="0dp"
+            app:np_textColor="@color/accent_white"
+            app:np_selectedTextColor="@color/colorPrimary"
+            app:np_textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonSet"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/numberPicker"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/accent_white"
+            android:background="@drawable/button_set_dialog"
+            android:foreground="@drawable/button_set_ripple"
+            android:text="Set" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
