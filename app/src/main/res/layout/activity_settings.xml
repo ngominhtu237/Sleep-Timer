@@ -52,7 +52,7 @@
                     android:layout_height="match_parent"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.CircleButton
+                    <com.tunm.sleeptimer.view.CircleButton
                         android:id="@+id/primaryColorBtn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -80,7 +80,7 @@
                     android:layout_height="match_parent"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.CircleButton
+                    <com.tunm.sleeptimer.view.CircleButton
                         android:id="@+id/minuteColorBtn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.CircleButton
+                    <com.tunm.sleeptimer.view.CircleButton
                         android:id="@+id/hourColorBtn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -206,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.SwitchColorCustom
+                    <com.tunm.sleeptimer.view.SwitchColorCustom
                         android:id="@+id/goHomeSwitch"
                         android:layout_width="45dp"
                         android:layout_height="45dp" />
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.SwitchColorCustom
+                    <com.tunm.sleeptimer.view.SwitchColorCustom
                         android:id="@+id/offScreenSwitch"
                         android:layout_width="45dp"
                         android:layout_height="45dp" />
@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.SwitchColorCustom
+                    <com.tunm.sleeptimer.view.SwitchColorCustom
                         android:id="@+id/silentSwitch"
                         android:layout_width="45dp"
                         android:layout_height="45dp" />
@@ -303,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.SwitchColorCustom
+                    <com.tunm.sleeptimer.view.SwitchColorCustom
                         android:id="@+id/offWifiSwitch"
                         android:layout_width="45dp"
                         android:layout_height="45dp" />
@@ -329,7 +329,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
 
-                    <com.example.sleeptimer.view.SwitchColorCustom
+                    <com.tunm.sleeptimer.view.SwitchColorCustom
                         android:id="@+id/offBluetoothSwitch"
                         android:layout_width="45dp"
                         android:layout_height="45dp" />

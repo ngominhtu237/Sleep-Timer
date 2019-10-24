@@ -3,8 +3,8 @@
     <dimen name="time_size">65sp</dimen>
     <dimen name="minute_margin_vertical">10dp</dimen>
 
-    <dimen name="minute_margin">30dp</dimen>
-    <dimen name="hour_margin">100dp</dimen>
+    <dimen name="minute_margin">40dp</dimen>
+    <dimen name="hour_margin">110dp</dimen>
 
     <dimen name="button_margin">60dp</dimen>
 
