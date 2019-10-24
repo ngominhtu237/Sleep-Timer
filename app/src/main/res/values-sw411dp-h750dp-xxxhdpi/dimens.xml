@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="time_size">120sp</dimen>
+    <dimen name="minute_margin_vertical">15dp</dimen>
+</resources>
+
+<!--Pixel 3 XL-->

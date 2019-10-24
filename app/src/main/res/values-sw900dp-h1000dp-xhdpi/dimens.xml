@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="time_size">150sp</dimen>
+    <dimen name="minute_margin_vertical">30dp</dimen>
+
+    <dimen name="minute_margin">120dp</dimen>
+    <dimen name="hour_margin">250dp</dimen>
+
+    <dimen name="button_margin">240dp</dimen>
+
+    <dimen name="quote_size">25sp</dimen>
+    <dimen name="author_size">23sp</dimen>
+</resources>
+
+<!--noteFE-->

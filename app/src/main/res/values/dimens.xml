@@ -8,5 +8,11 @@
     <dimen name="minute_margin">25dp</dimen>
     <dimen name="hour_margin">90dp</dimen>
 
+    <dimen name="button_size">13sp</dimen>
+    <dimen name="button_margin">100dp</dimen>
+
     <dimen name="minute_margin_vertical">30dp</dimen>
+
+    <dimen name="quote_size">15sp</dimen>
+    <dimen name="author_size">12sp</dimen>
 </resources>

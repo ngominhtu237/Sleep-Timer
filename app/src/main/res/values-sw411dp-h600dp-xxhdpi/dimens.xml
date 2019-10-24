@@ -5,4 +5,10 @@
 
     <dimen name="minute_margin">40dp</dimen>
     <dimen name="hour_margin">100dp</dimen>
+
+    <dimen name="button_margin">80dp</dimen>
+
+    <dimen name="button_size">12sp</dimen>
+    <dimen name="quote_size">12sp</dimen>
+    <dimen name="author_size">10sp</dimen>
 </resources>
