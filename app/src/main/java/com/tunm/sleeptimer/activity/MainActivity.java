@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -287,11 +288,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
 
+            case R.id.action_rate:
+                openAppInGooglePlay();
+                break;
+
             case R.id.action_about:
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openAppInGooglePlay() {
+        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 
     @Override
