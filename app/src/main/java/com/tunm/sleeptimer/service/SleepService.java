@@ -16,8 +16,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-
 import com.tunm.sleeptimer.R;
 import com.tunm.sleeptimer.activity.MainActivity;
 import com.tunm.sleeptimer.preferences.Prefs;
@@ -25,6 +23,8 @@ import com.tunm.sleeptimer.receiver.ExtendTimeReceiver;
 import com.tunm.sleeptimer.receiver.StopServiceReceiver;
 import com.tunm.sleeptimer.utils.SleepCountDownTimer;
 import com.tunm.sleeptimer.utils.TimeUtils;
+
+import androidx.core.app.NotificationCompat;
 
 public class SleepService extends Service {
     public final static String UPDATE_TIME_UI = "UPDATE_TIME_UI";
@@ -96,7 +96,7 @@ public class SleepService extends Service {
                 .setContentText(TimeUtils.secondToFullTime(timeCountdown) + " time left until end.")
                 .setPriority(NotificationManager.IMPORTANCE_HIGH)
                 .setContentIntent(pendingIntent)
-                .setDefaults(Notification.DEFAULT_ALL)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setOnlyAlertOnce(true)
                 .addAction(R.mipmap.icon_stop_96, getString(R.string.stop), stopServicePendingIntent)
                 .addAction(R.mipmap.icon_plus_96, "+ " + Prefs.getExtendedTime() + " min", extendTimePendingIntent);

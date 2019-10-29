@@ -10,9 +10,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,31 +50,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int densityDpi = (int)(metrics.density * 160f);
-        Log.v("screentunm ",  "dpi = " + densityDpi + "");
+//        DisplayMetrics metrics = getResources().getDisplayMetrics();
+//        int densityDpi = (int)(metrics.density * 160f);
+//        Log.v("screentunm ",  "dpi = " + densityDpi + "");
 
 //        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 //        Log.v("screentunm ", "width resolution = " + metrics.widthPixels + "");
 //        Log.v("screentunm ", "height resolution = " + metrics.heightPixels + "");
 
-        int widthPixels = metrics.widthPixels;
-        int heightPixels = metrics.heightPixels;
-        float scaleFactor = metrics.density;
-        float widthDp = widthPixels / scaleFactor;
-        float heightDp = heightPixels / scaleFactor;
-        float smallestWidth = Math.min(widthDp, heightDp);
-        Log.v("screentunm ", "smallestWidth = " + smallestWidth + "");
-
-        float deviceDensity  = getResources().getDisplayMetrics().density;
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-
-        float deviceHeight = outMetrics.heightPixels / deviceDensity;
-        float deviceWidth = outMetrics.widthPixels / deviceDensity;
-        Log.v("screentunm  ", "deviceWidth = " + deviceWidth + " - deviceHeight = " + deviceHeight);
-        Toast.makeText(this, deviceHeight + "", Toast.LENGTH_SHORT).show();
+//        int widthPixels = metrics.widthPixels;
+//        int heightPixels = metrics.heightPixels;
+//        float scaleFactor = metrics.density;
+//        float widthDp = widthPixels / scaleFactor;
+//        float heightDp = heightPixels / scaleFactor;
+//        float smallestWidth = Math.min(widthDp, heightDp);
+//        Log.v("screentunm ", "smallestWidth = " + smallestWidth + "");
+//
+//        float deviceDensity  = getResources().getDisplayMetrics().density;
+//        Display display = getWindowManager().getDefaultDisplay();
+//        DisplayMetrics outMetrics = new DisplayMetrics();
+//        display.getMetrics(outMetrics);
+//
+//        float deviceHeight = outMetrics.heightPixels / deviceDensity;
+//        float deviceWidth = outMetrics.widthPixels / deviceDensity;
+//        Log.v("screentunm  ", "deviceWidth = " + deviceWidth + " - deviceHeight = " + deviceHeight);
+//        Toast.makeText(this, deviceHeight + "", Toast.LENGTH_SHORT).show();
 
 
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
