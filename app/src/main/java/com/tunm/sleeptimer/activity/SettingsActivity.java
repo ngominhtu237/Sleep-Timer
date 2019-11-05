@@ -17,9 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.shawnlin.numberpicker.NumberPicker;
 import com.tunm.sleeptimer.CustomModelClass;
 import com.tunm.sleeptimer.R;
 import com.tunm.sleeptimer.SleepColor;
@@ -27,13 +30,11 @@ import com.tunm.sleeptimer.preferences.Prefs;
 import com.tunm.sleeptimer.service.AdminReceiver;
 import com.tunm.sleeptimer.view.CircleButton;
 import com.tunm.sleeptimer.view.SwitchColorCustom;
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.shawnlin.numberpicker.NumberPicker;
 
 import java.util.Objects;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -66,6 +67,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private DevicePolicyManager mDevicePolicyManger;
     private ComponentName compName;
 
+    private AdView mAdViewSettings;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -79,6 +82,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         refreshTheme();
         generateSwitch();
         eventHandler();
+
+        mAdViewSettings = findViewById(R.id.adViewSettings);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdViewSettings.loadAd(adRequest);
     }
 
     @Override

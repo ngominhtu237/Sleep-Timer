@@ -32,15 +32,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
     implementation 'com.github.kizitonwose.colorpreference:core:1.1.0'
-
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 
     implementation 'com.shawnlin:number-picker:2.4.8'
     implementation 'androidx.cardview:cardview:1.0.0'
-
     implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
 }

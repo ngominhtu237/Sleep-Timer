@@ -15,4 +15,6 @@
 
     <dimen name="quote_size">15sp</dimen>
     <dimen name="author_size">12sp</dimen>
+
+    <dimen name="emoji_size">20sp</dimen>
 </resources>

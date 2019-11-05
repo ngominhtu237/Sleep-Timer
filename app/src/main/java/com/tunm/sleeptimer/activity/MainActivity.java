@@ -20,8 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.tunm.sleeptimer.R;
-import com.tunm.sleeptimer.data.QuoteModel;
+import com.tunm.sleeptimer.data.provider.EmojiProvider;
 import com.tunm.sleeptimer.data.provider.QuoteDataProvider;
 import com.tunm.sleeptimer.preferences.Prefs;
 import com.tunm.sleeptimer.service.SleepService;
@@ -39,13 +44,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button mStartSleepButton, mStopSleepButton;
     private CircleSeekBar mHourSeekbar;
     private CircleSeekBar mMinuteSeekbar;
-    private TextView mClockTV, mQuoteTV, mAuthorTV;
+    private TextView mClockTV, mQuoteTV, mAuthorTV, mEmojiTV;
     private RelativeLayout clockSeekBarContainer;
     private View blankView;
 
     private GradientAnimation gradientAnimation;
-
     private QuoteDataProvider quoteDataProvider;
+    private EmojiProvider emojiProvider;
+
+    private AdView mAdView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +91,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mStartSleepButton = findViewById(R.id.buttonStartSleep);
         mStopSleepButton = findViewById(R.id.buttonStopSleep);
         mClockTV = findViewById(R.id.clockTV);
-        mQuoteTV = findViewById(R.id.quoteTV);
-        mAuthorTV = findViewById(R.id.authorTV);
+//        mQuoteTV = findViewById(R.id.quoteTV);
+//        mAuthorTV = findViewById(R.id.authorTV);
+        mEmojiTV = findViewById(R.id.emojiTV);
         clockSeekBarContainer = findViewById(R.id.clockSeekBarContainer);
         blankView = findViewById(R.id.blankView);
         mStartSleepButton.setOnClickListener(this);
@@ -134,10 +142,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             adjustLayoutWhenClickStop();
         }
 
-        quoteDataProvider = new QuoteDataProvider(this);
-        QuoteModel quoteModel = quoteDataProvider.getRandomQuote();
-        mQuoteTV.setText(quoteModel.getContent());
-        mAuthorTV.setText(quoteModel.getAuthor());
+//        quoteDataProvider = new QuoteDataProvider(this);
+//        QuoteModel quoteModel = quoteDataProvider.getRandomQuote();
+//        mQuoteTV.setText(quoteModel.getContent());
+//        mAuthorTV.setText(quoteModel.getAuthor());
+
+        loadEmoji();
+
+//      Initialize Mobile Ads SDK
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void loadEmoji() {
+        emojiProvider = new EmojiProvider(this);
+        mEmojiTV.setText(emojiProvider.getEmojis());
     }
 
     @SuppressLint("SetTextI18n")

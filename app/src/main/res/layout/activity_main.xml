@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,40 +73,51 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/quoteTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/clockSeekBarContainer"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:gravity="center"
-        android:textColor="@color/accent_white"
-        android:textSize="@dimen/quote_size"
-        android:textStyle="italic" />
+<!--    <TextView-->
+<!--        android:id="@+id/quoteTV"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/clockSeekBarContainer"-->
+<!--        android:layout_marginLeft="40dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="@color/accent_white"-->
+<!--        android:textSize="@dimen/quote_size"-->
+<!--        android:textStyle="italic" />-->
 
-    <TextView
-        android:id="@+id/authorTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/quoteTV"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="40dp"
-        android:gravity="center"
-        android:textColor="@color/accent_white"
-        android:textSize="@dimen/author_size"
-        android:textStyle="italic" />
+<!--    <TextView-->
+<!--        android:id="@+id/authorTV"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/quoteTV"-->
+<!--        android:layout_marginLeft="40dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="@color/accent_white"-->
+<!--        android:textSize="@dimen/author_size"-->
+<!--        android:textStyle="italic" />-->
+
+        <TextView
+            android:id="@+id/emojiTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/clockSeekBarContainer"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:textColor="@color/accent_white"
+            android:textSize="@dimen/emoji_size" />
 
     <Button
         android:id="@+id/buttonStartSleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_marginRight="@dimen/button_margin"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/adView"
         android:background="@drawable/button_start_circle_background"
         android:foreground="@drawable/ripple_circle"
         android:text="Start now"
@@ -117,11 +129,11 @@
         android:id="@+id/buttonStopSleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_marginRight="@dimen/button_margin"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/adView"
         android:background="@drawable/button_stop_circle_background"
         android:foreground="@drawable/ripple_circle"
         android:text="RESET"
@@ -130,25 +142,12 @@
         android:visibility="gone"
         tools:ignore="MissingConstraints" />
 
-    <!--<NumberPicker-->
-    <!--android:id="@+id/numberPicker"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@id/seekContainer"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginStart="8dp"-->
-    <!--android:layout_marginTop="15dp"-->
-    <!--android:layout_marginEnd="8dp"-->
-    <!--android:layout_marginBottom="8dp"-->
-    <!--tools:ignore="MissingConstraints" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tvWish"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/numberPicker"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginTop="7dp"-->
-    <!--android:text="@string/wish" />-->
-
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 </RelativeLayout>

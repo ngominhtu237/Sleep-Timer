@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="emojis_array">
+        <item>0x1F600</item>
+        <item>0x1F604</item>
+        <item>0x1F60A</item>
+        <item>0x1F607</item>
+        <item>0x1F970</item>
+        <item>0x1F60D</item>
+        <item>0x1F929</item>
+        <item>0x1F618</item>
+        <item>0x1F617</item>
+        <item>0x1F619</item>
+
+        <item>0x1F60B</item>
+        <item>0x1F61B</item>
+        <item>0x1F61D</item>
+        <item>0x1F917</item>
+        <item>0x1F92D</item>
+        <item>0x1F636</item>
+        <item>0x1F62C</item>
+        <item>0x1F60C</item>
+        <item>0x1F62A</item>
+        <item>0x1F634</item>
+
+        <item>0x1F60E</item>
+        <item>0x1F913</item>
+        <item>0x1F973</item>
+        <item>0x1F920</item>
+        <item>0x1F62E</item>
+        <item>0x1F633</item>
+        <item>0x1F608</item>
+        <item>0x1F921</item>
+        <item>0x1F498</item>
+        <item>0x1F493</item>
+
+        <item>0x2764</item>
+        <item>0x1F9E1</item>
+        <item>0x1F49B</item>
+        <item>0x1F49A</item>
+        <item>0x1F499</item>
+        <item>0x1F49C</item>
+    </integer-array>
+</resources>
