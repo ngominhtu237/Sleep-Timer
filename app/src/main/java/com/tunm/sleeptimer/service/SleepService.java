@@ -46,6 +46,7 @@ public class SleepService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Prefs.init(this);
         Log.v("SleepService ", "onCreate");
     }
 

@@ -36,7 +36,7 @@
             android:textSize="30sp"
             android:fontFamily="@font/vachitec"
             android:layout_marginTop="20dp"
-            android:text="Sleep Timer"/>
+            android:text="Sleep Timer Pro"/>
 
         <TextView
             android:layout_width="match_parent"

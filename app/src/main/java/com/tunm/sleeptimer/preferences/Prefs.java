@@ -1,6 +1,7 @@
 package com.tunm.sleeptimer.preferences;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -8,16 +9,13 @@ public class Prefs {
     private static SharedPrefs sharedPrefs;
 
     public static void init(@NonNull Context context) {
-//        if (sharedPrefs != null) {
-//            throw new RuntimeException("Prefs has already been instantiated");
-//        }
         sharedPrefs = new SharedPrefs(context);
     }
 
     @NonNull
     private static SharedPrefs getPrefs() {
         if (sharedPrefs == null) {
-            throw new RuntimeException("Prefs has not been instantiated. Call init() with context");
+            Log.v("Prefs", "Prefs has not been instantiated. Call init() with context");
         }
         return sharedPrefs;
     }

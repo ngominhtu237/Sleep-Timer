@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.tunm.sleeptimer.CustomModelClass;
@@ -83,9 +82,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         generateSwitch();
         eventHandler();
 
-        mAdViewSettings = findViewById(R.id.adViewSettings);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdViewSettings.loadAd(adRequest);
+//        mAdViewSettings = findViewById(R.id.adViewSettings);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdViewSettings.loadAd(adRequest);
     }
 
     @Override
