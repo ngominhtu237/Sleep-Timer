@@ -2,6 +2,7 @@ package com.tunm.sleeptimer.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -62,9 +63,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
 
     private int primaryColor, seekBarMinuteColor, seekBarHourColor;
     private static final int RESULT_ENABLE = 1;
+    private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 2;
 
     private DevicePolicyManager mDevicePolicyManger;
     private ComponentName compName;
+    private NotificationManager notificationManager;
 
     private AdView mAdViewSettings;
 
@@ -77,6 +80,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
 
         mDevicePolicyManger = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         compName = new ComponentName(this, AdminReceiver.class);
+        notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         refreshTheme();
         generateSwitch();
@@ -248,7 +252,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.silentSwitch:
-                Prefs.setSilentMode(b);
+                if (!notificationManager.isNotificationPolicyAccessGranted()) {
+                    mSilentModeSwitch.setChecked(false);
+                    Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                    startActivityForResult(intent, ON_DO_NOT_DISTURB_CALLBACK_CODE);
+                } else{
+                    Prefs.setSilentMode(b);
+                }
                 break;
             case R.id.offWifiSwitch:
                 Prefs.setOffWifi(b);
@@ -264,13 +274,20 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_ENABLE) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.i("DeviceAdminSample", "Admin enabled!");
                 mOffScreenSwitch.setChecked(true);
                 Prefs.setOffScreen(true);
             } else {
-                Log.i("DeviceAdminSample", "Admin enable FAILED!");
                 Toast.makeText(this, "must enable device administrator", Toast.LENGTH_LONG).show();
                 mOffScreenSwitch.setChecked(false);
+            }
+        }
+        if (requestCode == ON_DO_NOT_DISTURB_CALLBACK_CODE ) {
+            if (notificationManager.isNotificationPolicyAccessGranted()) {
+                mSilentModeSwitch.setChecked(true);
+                Prefs.setSilentMode(true);
+            } else {
+                Toast.makeText(this, "need do not disturb permission", Toast.LENGTH_LONG).show();
+                mSilentModeSwitch.setChecked(false);
             }
         }
     }
