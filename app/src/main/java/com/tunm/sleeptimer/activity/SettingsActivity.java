@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.tunm.sleeptimer.CustomModelClass;
@@ -56,8 +57,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.offWifiSwitch) SwitchColorCustom mOffWifiSwitch;
     @BindView(R.id.offBluetoothSwitch) SwitchColorCustom mOffBlueToothSwitch;
 
-    @BindView(R.id.extendedTimeContainer)
-    LinearLayout mExLayout;
+    @BindView(R.id.extendedTimeContainer) LinearLayout mExLayout;
+    @BindView(R.id.offWifiContainer) LinearLayout mOffWifiContainer;
 
     NumberPicker picker;
 
@@ -86,9 +87,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         generateSwitch();
         eventHandler();
 
-//        mAdViewSettings = findViewById(R.id.adViewSettings);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdViewSettings.loadAd(adRequest);
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P) {
+            mOffWifiContainer.setVisibility(View.GONE);
+        }
+
+        mAdViewSettings = findViewById(R.id.adViewSettings);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdViewSettings.loadAd(adRequest);
     }
 
     @Override

@@ -13,8 +13,7 @@ import android.util.Log;
 
 class SleepAction {
 
-    private static final String TAG = " sleeptimer:mywakelocktag.";
-
+    private static final String TAG = "SleepAction";
 
     static void goHomeScreen(Service act) {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -26,22 +25,8 @@ class SleepAction {
     @SuppressLint("LongLogTag")
     static void turnOffScreen(Service service) {
         Log.v("SleepAction", "sleep");
-//        int defaultTurnOffTime =  Settings.System.getInt(service.getContentResolver(),Settings.System.SCREEN_OFF_TIMEOUT, 60000); // current time off screen
-//        Settings.System.putInt(service.getContentResolver(),Settings.System.SCREEN_OFF_TIMEOUT, 500);
-////        if(isScreenOn(service)) {
-////            Log.v("offscreen", "ok");
-//            Settings.System.putInt(service.getContentResolver(),Settings.System.SCREEN_OFF_TIMEOUT, defaultTurnOffTime);
-////        }
-//        Prefs.setTimeOffScreen(defaultTurnOffTime);
-//        ComponentName compName = new ComponentName(service, AdminReceiver.class);
-//        DevicePolicyManager deviceManger = (DevicePolicyManager)service.getSystemService(
-//                Context.DEVICE_POLICY_SERVICE);
-//        if (deviceManger != null && deviceManger.isAdminActive(compName)) {
-//            deviceManger.lockNow();
-//        }
         lock(service);
     }
-
 
     private static void lock(Service service) {
         PowerManager pm = (PowerManager) service.getSystemService(Context.POWER_SERVICE);
@@ -55,15 +40,24 @@ class SleepAction {
 
     static void goSilentMode(Service act) {
         AudioManager audioManager = (AudioManager) act.getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager != null) {
-            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        try {
+            if (audioManager != null) {
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception", e);
         }
     }
 
     static void turnOffWifi(Service act) {
         WifiManager wifiManager = (WifiManager) act.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        boolean wifiEnabled;
         if (wifiManager != null) {
-            wifiManager.setWifiEnabled(false);
+            wifiEnabled = wifiManager.isWifiEnabled();
+            Log.v(TAG, "wifiEnabled" + wifiEnabled);
+            if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.P) {
+                wifiManager.setWifiEnabled(false);
+            }
         }
     }
 

@@ -14,12 +14,12 @@ final class SharedPrefs {
         sharedPrefs = context.getApplicationContext().getSharedPreferences(PREFERENCES_NAME, PREFERENCES_MODE);
     }
 
-    private SharedPreferences.Editor getEditer() {
+    private SharedPreferences.Editor getEditor() {
         return sharedPrefs.edit();
     }
 
     void put(String key, int value) {
-        getEditer().putInt(key, value).commit();
+        getEditor().putInt(key, value).commit();
     }
 
     int get(String key, int defaultValue) {
@@ -27,7 +27,7 @@ final class SharedPrefs {
     }
 
     void put(String key, boolean value) {
-        getEditer().putBoolean(key, value).commit();
+        getEditor().putBoolean(key, value).commit();
     }
 
     boolean get(String key, boolean defaultValue) {
