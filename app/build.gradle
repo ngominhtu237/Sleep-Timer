@@ -7,13 +7,13 @@ android {
         applicationId "com.tunm.sleeptimer"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.8.0"
+        versionCode 10
+        versionName "1.8.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
