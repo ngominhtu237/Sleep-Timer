@@ -20,11 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.tunm.sleeptimer.R;
 import com.tunm.sleeptimer.data.provider.EmojiProvider;
 import com.tunm.sleeptimer.data.provider.QuoteDataProvider;
@@ -53,46 +53,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private EmojiProvider emojiProvider;
 
     private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        int densityDpi = (int)(metrics.density * 160f);
-//        Log.v("screentunm ",  "dpi = " + densityDpi + "");
-
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        Log.v("screentunm ", "width resolution = " + metrics.widthPixels + "");
-//        Log.v("screentunm ", "height resolution = " + metrics.heightPixels + "");
-
-//        int widthPixels = metrics.widthPixels;
-//        int heightPixels = metrics.heightPixels;
-//        float scaleFactor = metrics.density;
-//        float widthDp = widthPixels / scaleFactor;
-//        float heightDp = heightPixels / scaleFactor;
-//        float smallestWidth = Math.min(widthDp, heightDp);
-//        Log.v("screentunm ", "smallestWidth = " + smallestWidth + "");
-//
-//        float deviceDensity  = getResources().getDisplayMetrics().density;
-//        Display display = getWindowManager().getDefaultDisplay();
-//        DisplayMetrics outMetrics = new DisplayMetrics();
-//        display.getMetrics(outMetrics);
-//
-//        float deviceHeight = outMetrics.heightPixels / deviceDensity;
-//        float deviceWidth = outMetrics.widthPixels / deviceDensity;
-//        Log.v("screentunm  ", "deviceWidth = " + deviceWidth + " - deviceHeight = " + deviceHeight);
-//        Toast.makeText(this, deviceHeight + "", Toast.LENGTH_SHORT).show();
-
-
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setTitle("Sleep Timer");
 
         mStartSleepButton = findViewById(R.id.buttonStartSleep);
         mStopSleepButton = findViewById(R.id.buttonStopSleep);
         mClockTV = findViewById(R.id.clockTV);
-//        mQuoteTV = findViewById(R.id.quoteTV);
-//        mAuthorTV = findViewById(R.id.authorTV);
         mEmojiTV = findViewById(R.id.emojiTV);
         clockSeekBarContainer = findViewById(R.id.clockSeekBarContainer);
         blankView = findViewById(R.id.blankView);
@@ -108,22 +79,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         gradientAnimation.setCustomSeekbarAnimation(mHourSeekbar, Prefs.getPrimaryColor(this), Prefs.getSeekbarHourColor(this));
         mStartSleepButton.getBackground().setColorFilter(Prefs.getPrimaryColor(this), PorterDuff.Mode.SRC_ATOP);
 
-        mHourSeekbar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onChanged(CircleSeekBar seekbar, int curValue) {
-                if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
-                    changeText(curValue, mMinuteSeekbar.getCurProcess());
-                }
+        mHourSeekbar.setOnSeekBarChangeListener((seekbar, curValue) -> {
+            if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
+                changeText(curValue, mMinuteSeekbar.getCurProcess());
             }
-
         });
 
-        mMinuteSeekbar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onChanged(CircleSeekBar seekbar, int curValue) {
-                if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
-                    changeText(mHourSeekbar.getCurProcess(), curValue);
-                }
+        mMinuteSeekbar.setOnSeekBarChangeListener((seekbar, curValue) -> {
+            if (!ServiceUtils.isMyServiceRunning(MainActivity.this, SleepService.class)) {
+                changeText(mHourSeekbar.getCurProcess(), curValue);
             }
         });
 
@@ -132,7 +96,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         registerReceiver(stopSleepReceiver, new IntentFilter(SleepService.STOP_TIMER));
         registerReceiver(updateTimerReceiver, new IntentFilter(SleepService.UPDATE_TIME_UI));
-//        registerReceiver(updateCountReceiver, new IntentFilter(SleepService.UPDATE_COUNT));
 
         if (ServiceUtils.isMyServiceRunning(this, SleepService.class)) {
             Log.v("SleepService ", "running...");
@@ -141,23 +104,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             Log.v("SleepService ", "stop");
             adjustLayoutWhenClickStop();
         }
-
-//        quoteDataProvider = new QuoteDataProvider(this);
-//        QuoteModel quoteModel = quoteDataProvider.getRandomQuote();
-//        mQuoteTV.setText(quoteModel.getContent());
-//        mAuthorTV.setText(quoteModel.getAuthor());
-
         loadEmoji();
-
-//      Initialize Mobile Ads SDK
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+        MobileAds.initialize(this, initializationStatus -> {});
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.ad_unitId_fullScreen));
+        loadInterstitialAd();
+    }
+
+    private void loadInterstitialAd() {
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 
     private void loadEmoji() {
@@ -177,6 +143,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intent.putExtra("time", mMinuteSeekbar.getCurProcess() + mHourSeekbar.getCurProcess() * 60);
         stopService(intent); // when user multiple click => need to restart service to prevent duplicate notification
         startService(intent);
+        loadInterstitialAd();
     }
 
     private void stopSleepService() {
