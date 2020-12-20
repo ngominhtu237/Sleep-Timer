@@ -22,10 +22,6 @@ public class SleepCountDownTimer extends CountDownTimer {
     @Override
     public void onFinish() {
         Log.v("SleepCountDownTimer", "onFinish");
-        try {
-            mSleepService.stopPlayer();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        mSleepService.stop();
     }
 }

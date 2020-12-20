@@ -160,57 +160,74 @@ public class SleepService extends Service {
         }
     }
 
-    public void stopPlayer() throws InterruptedException {
-        mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        AudioAttributes mAudioAttributes =
-                new AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build();
-        int currentVolume = 0;
-        if (mAudioManager != null) {
-            currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        }
-        saveVolume = currentVolume;
+    public void stop() {
+        new StopThread().start();
+    }
 
-        // begin fade out
-        int focusRequest = 0;
-        int targetVol = 0;
-        while (currentVolume > targetVol) {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (currentVolume - STEP_DOWN), 0);
-            currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            Thread.sleep(1500);
-        }
-
-        // count end => requestFocus
-        if (currentVolume == 0 && mAudioManager != null) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                focusRequest = mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-            } else {
-                AudioFocusRequest mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                        .setAudioAttributes(mAudioAttributes)
-                        .setAcceptsDelayedFocusGain(true)
-                        .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
-                        .build();
-                focusRequest = mAudioManager.requestAudioFocus(mAudioFocusRequest);
+    private void stopPlayer() {
+        try {
+            mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+            AudioAttributes mAudioAttributes =
+                    new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build();
+            int currentVolume = 0;
+            if (mAudioManager != null) {
+                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             }
-        }
-        switch (focusRequest) {
-            case AudioManager.AUDIOFOCUS_REQUEST_FAILED:
-                Log.v("SleepService ", "requestAudioFocus fail");
-            case AudioManager.AUDIOFOCUS_REQUEST_GRANTED:
-                if (Prefs.getGoHomeScreen()) SleepAction.goHomeScreen(this);
-                if (Prefs.getOffScreen()) SleepAction.turnOffScreen(this);
-                if (Prefs.getSilentMode()) SleepAction.goSilentMode(this);
-                if (Prefs.getOffBlueTooth()) SleepAction.turnOffBluetooth(this);
-                if (Prefs.getOffWifi()) SleepAction.turnOffWifi(this);
+            saveVolume = currentVolume;
 
-                // stop service
-                finishService();
+            // begin fade out
+            int focusRequest = 0;
+            int targetVol = 0;
+            while (currentVolume > targetVol) {
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (currentVolume - STEP_DOWN), 0);
+                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // count end => requestFocus
+            if (currentVolume == 0 && mAudioManager != null) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    focusRequest = mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                } else {
+                    AudioFocusRequest mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                            .setAudioAttributes(mAudioAttributes)
+                            .setAcceptsDelayedFocusGain(true)
+                            .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
+                            .build();
+                    focusRequest = mAudioManager.requestAudioFocus(mAudioFocusRequest);
+                }
+            }
+            switch (focusRequest) {
+                case AudioManager.AUDIOFOCUS_REQUEST_FAILED:
+                    Log.v("SleepService ", "requestAudioFocus fail");
+                case AudioManager.AUDIOFOCUS_REQUEST_GRANTED:
+                    if (Prefs.getGoHomeScreen()) SleepAction.goHomeScreen(this);
+                    if (Prefs.getOffScreen()) SleepAction.turnOffScreen(this);
+                    if (Prefs.getSilentMode()) SleepAction.goSilentMode(this);
+                    if (Prefs.getOffBlueTooth()) SleepAction.turnOffBluetooth(this);
+                    if (Prefs.getOffWifi()) SleepAction.turnOffWifi(this);
+                    finishService();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    private class StopThread extends Thread {
+        @Override
+        public void run() {
+            stopPlayer();
+        }
+    }
+
+    private final AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
