@@ -20,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -109,21 +108,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getResources().getString(R.string.ad_unitId_fullScreen));
-        loadInterstitialAd();
-    }
-
-    private void loadInterstitialAd() {
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-            }
-        });
     }
 
     private void loadEmoji() {
@@ -143,7 +127,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intent.putExtra("time", mMinuteSeekbar.getCurProcess() + mHourSeekbar.getCurProcess() * 60);
         stopService(intent); // when user multiple click => need to restart service to prevent duplicate notification
         startService(intent);
-        loadInterstitialAd();
     }
 
     private void stopSleepService() {
