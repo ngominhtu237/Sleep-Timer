@@ -14,7 +14,7 @@
     <string name="sleep_timer_admin">Sleep Timer</string>
     <string name="sleep_timer_description">Allow to turn off screen</string>
     <string name="about_intro">Sleep Timer helps you to schedule music off time to save phone power and help you have a good sleep with just one click.</string>
-    <string name="sleep_timer_version">Version 1.8.2</string>
+    <string name="sleep_timer_version">Version 1.8.4</string>
     <string name="develop_by">Develop by Candy Star</string>
     <string name="for_more_information">For more information please connect with</string>
 </resources>
